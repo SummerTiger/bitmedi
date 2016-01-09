@@ -47,8 +47,11 @@ app.get('/query/:hash',function(req,res) {
 });
 
 app.post('/append',function(req,res) {
-    console.log(req.body);
-    res.send(req.body);
+    var ID = req.body.id;
+    var Cipher = req.body.cipher;
+    client.invoke("append",ID,Cipher,function(err,result,more){
+	res.send(result);
+    })
 });
 
 app.get('/hello',function(req,res){

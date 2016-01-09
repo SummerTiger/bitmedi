@@ -10,6 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "async": "^1.5.2",
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "mustache-express": "^1.2.2",
     "nodejs-aes256": "^1.0.1"
   }
 }

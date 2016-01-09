@@ -3,3 +3,4 @@ cli/node_modules
 *.*~
 *.pyc
 *.swp
+*.db

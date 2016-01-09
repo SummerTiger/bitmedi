@@ -5,13 +5,13 @@ b = factom_gateway.BitMedi()
 
 class BitMediRPC(object):
     def login(self,ID):
-        return [0xdead,0xdeae,0xdeaf]
+        return b.login(ID)
         
-    def query(self,Hash):
-        return 
+    def query(self,ID,Hash):
+        return b.get_record_from_fct(ID,Hash)
 
-    def append(self,userID,entry,cipher):
-        return
+    def append(self,userID,cipher):
+        return b.post_record_to_fct("10","jackec",userID,cipher)
 
     def showAddress(self):
         return b.show_address()
