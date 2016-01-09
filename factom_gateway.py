@@ -64,8 +64,8 @@ class BitMedi:
                     "Content":"NO."+seq+" chain of bitmedi"}
         s = self.fct_post("fctwallet", "compose-chain-submit", entry_name, values)
         self.bitmedi_chain_dic.setdefault(seq, s[u'ChainID'])
-        print self.fct_post("factomd", "commit-chain", "", s[u'ChainCommit'])
-        print self.fct_post("factomd", "reveal-chain", "", s[u'EntryReveal'])
+        self.fct_post("factomd", "commit-chain", "", s[u'ChainCommit'])
+        self.fct_post("factomd", "reveal-chain", "", s[u'EntryReveal'])
 
     def post_record_to_fct(self, seq, entry_name, user_id, enc_content):
         values = {"ChainID":self.bitmedi_chain_dic[seq], 
@@ -82,9 +82,11 @@ class BitMedi:
 
         # save user_id, entry_hash here(light database)
 	self.db_con.execute("INSERT INTO CACHED VALUES ('"+user_id+"', '"+entry_hashed+"');")
+	self.db_con.commit()
 
-        print self.fct_post("factomd", "commit-entry", "", s[u'EntryCommit'])
-        print self.fct_post("factomd", "reveal-entry", "", s[u'EntryReveal'])
+        self.fct_post("factomd", "commit-entry", "", s[u'EntryCommit'])
+        self.fct_post("factomd", "reveal-entry", "", s[u'EntryReveal'])
+	return entry_hashed
 
     def get_record_from_fct(self, user_id, entry_hashed):
 
@@ -96,7 +98,7 @@ class BitMedi:
         return jdata[u'Content'].decode('hex')
 
     def login(self, user_id):
-	cur = b.db_con.execute("select entryhashed from cached where userid='"+user_id+"';")
+	cur = self.db_con.execute("select entryhashed from cached where userid='"+user_id+"';")
     	cur_list = []
     	for row in cur:
 		cur_list.append(row)
@@ -116,14 +118,14 @@ if __name__ == '__main__':
     b=BitMedi()
     print b.bitmedi_chain_dic
     # chenhao = user id ; code = content for encryption info
-    b.post_record_to_fct("10", "jackec", "chenhao", "code")
-    b.post_record_to_fct("10", "jackec", "chenhao", "code2")
-    b.post_record_to_fct("10", "jackec", "chenhao", "code3")
-    user_cur = b.db_con.execute("select userid,entryhashed from cached;")
-    user_list = []
-    for row in user_cur:
-	user_list.append(row)
-    print user_list
+    #b.post_record_to_fct("10", "jackec", "chenhao", "code")
+    #b.post_record_to_fct("10", "jackec", "chenhao", "code2")
+    #b.post_record_to_fct("10", "jackec", "chenhao", "code3")
+    #user_cur = b.db_con.execute("select userid,entryhashed from cached;")
+    #user_list = []
+    #for row in user_cur:
+    #    user_list.append(row)
+    #print user_list
     print b.login("chenhao")
 	
     #print b.bitmedi_entry_dic
