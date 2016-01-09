@@ -18,7 +18,7 @@ class BitMedi:
     def __init__(self):
         self.url = "http://bitmedi:8089/v1/"
         self.url2 = "http://bitmedi:8088/v1/"
-        self.bitmedi_chain_list = []
+        self.bitmedi_chain_dic = {}
 
     def fct_post(self, method, action, target, values):
         """
@@ -59,16 +59,23 @@ class BitMedi:
         values = {"ExtIDs":["bitmedi", seq], 
                     "Content":"NO."+seq+" chain of bitmedi"}
         s = self.fct_post("fctwallet", "compose-chain-submit", entry_name, values)
-        self.bitmedi_chain_list.append(s[u'ChainID'])
+        self.bitmedi_chain_dic.setdefault(seq, s[u'ChainID'])
         print self.fct_post("factomd", "commit-chain", "", s[u'ChainCommit']) 
         print self.fct_post("factomd", "reveal-chain", "", s[u'EntryReveal']) 
         return s
 
-    def post_record(self):
-        values = {"ChainID":"92475004e70f41b94750f4a77bf7b430551113b25d3d57169eadca5692bb043d", 
-                    "ExtIDs":["foo", "bar"], 
-                    "Content":"Hello Factom!"}
-        self.fct_post("fctwallet", "compose-entry-submit", "zeros", values)
+    def post_record_to_fct(self, seq, entry_name, user_id, enc_content):
+        values = {"ChainID":self.bitmedi_chain_dic[seq], 
+                    "ExtIDs":[user_id], 
+                    "Content":enc_content}
+        s = self.fct_post("fctwallet", "compose-entry-submit", entry_name, values)
+        print s
+        # save user_id, entry_hash here
+        print self.fct_post("factomd", "commit-entry", "", s[u'EntryCommit']) 
+        print self.fct_post("factomd", "reveal-entry", "", s[u'EntryReveal']) 
+
+    def get_record_from_fct(self, user_id, hash_code):
+        pass
 
     def show_balance(self):
         self.fct_inquiry("fctwallet", "factoid-balance", "FA2jK2HcLnRdS94dEcU27rF3meoJfpUcZPSinpb7AwQvPRY6RL1Q")
@@ -76,10 +83,6 @@ class BitMedi:
     def show_address(self):
         self.fct_inquiry("fctwallet", "factoid-get-addresses", "")
 
-    def get_enc_record_from_fct(self, user_id, hash_code):
-        pass
-    def post_enc_record_to_fct(self, user_id, enc_content):
-        pass
 
 # --------- main ---------
 if __name__ == '__main__':
@@ -87,8 +90,9 @@ if __name__ == '__main__':
 
 
     b=BitMedi()
-    c=b.init_chain("1", "zeros")
-    print c
+    c=b.init_chain("10", "zeros")
+    print b.bitmedi_chain_dic
+    b.post_record_to_fct("10", "zeros", "chenhao", "code")
     #b.show_balance()
     #b.post_record()
     #b.show_address()
