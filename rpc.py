@@ -5,7 +5,9 @@ b = factom_gateway.BitMedi()
 
 class BitMediRPC(object):
     def login(self,ID):
-        return b.login(ID)
+        res = b.login(ID)
+        print res
+        return res
         
     def query(self,ID,Hash):
         return b.get_record_from_fct(ID,Hash)

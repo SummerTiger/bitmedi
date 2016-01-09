@@ -89,10 +89,13 @@ class BitMedi:
 	return entry_hashed
 
     def get_record_from_fct(self, user_id, entry_hashed):
-
+        
         s = self.fct_inquiry("factomd", "entry-by-hash", entry_hashed)
+        print user_id
+        print entry_hashed
+        print s
         jdata = s.json()
-        #print jdata
+        print "Entry Data: "+jdata
         # now convert HEX to string to print
         #print jdata[u'Content'].decode('hex')
         return jdata[u'Content'].decode('hex')

@@ -55,7 +55,20 @@
 
 
 <div class="container-fluid">
-
+  <input type="button" class="btn btn-info btn-large" value="Add to Factom" onclick="addToFactom()"/>
+  <script>
+    function addToFactom() {
+    $.getJSON("http://139.196.190.15:3002/info",function(data){
+    console.log(data);
+           var ID = data.ID;
+           var Key = data.Key;
+           var encrypted = encrypt(JSON.stringify({'name':'John Smith','age':38,'gender':'male'}),Key);
+           $.post("http://139.196.190.15:3002/append",{id:ID,encrypted:encrypted},function(result){
+               console.log(result);
+           });
+        });
+    }
+  </script>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">

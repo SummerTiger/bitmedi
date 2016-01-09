@@ -10,10 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^1.5.2",
     "body-parser": "^1.14.2",
     "d3": "^4.0.0-alpha.4",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "express-session": "^1.12.1",
     "lodash": "^3.10.1",
     "request": "^2.67.0"
   }

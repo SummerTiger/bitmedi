@@ -1,19 +1,22 @@
 /**
  * Created by kimi on 2015/11/19.
  */
-var app = require('express')();
-var server = require('http').Server(app);
+
 
 
 var express = require('express');
+var session = require('express-session');
+var app = express();
+var server = require('http').Server(app);
 
 app.set('view engine', 'ejs');
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public'));
+app.use(session({secret: 'ssshhhhh'}));
 
 var request = require('request');
 var path = require('path');
-
+var session;
 
 
 var server = app.listen(3002, function () {
@@ -91,6 +94,10 @@ function * withYield() {
     app.use(bodyParser());
 
     app.get('/blockchain', function(req, res) {
+	session = req.session;
+	if (!session.login) {
+	    res.redirect('/');
+	}
 
         res.render('blockchain', { cargo : data
 
@@ -109,22 +116,38 @@ function * withYield() {
             'Enter your password:' +
             '<input type="text" name="inputKey" placeholder="..." />' +
             '<br>' +
-            '<button type="submit">Submit</button>' +
+            '<button type="submit" onclick="alert(\"hello\");">Submit</button>' +
             '</form>';
 
         res.send(html);
     });
 
+    var ID;
+    var Key;
+    app.get('/Info',function(req,res){
+	res.jsonp({
+	    ID:ID,
+	    Key:Key
+	});
+    })
+    
+    app.post('/append',function(req,res){
+	request.post({url:remote+"append/",form:req.body},function(err,httpResp,body){
+	    res.send(body);
+	});
+    });
+    
     app.post('/', function(req, res){
-        var ID = req.body.inputID;
-        var Key = req.body.inputKey;
-	request(remote+"login2/"+ID, function (error, response, body) {
+        ID = req.body.inputID;
+        Key = req.body.inputKey;
+	request(remote+"login/"+ID, function (error, response, body) {
 	    if (!error && response.statusCode == 200) {
 		var bodyJson = JSON.parse(body);
 		var entries = bodyJson.entries;
+		console.log(entries);
 		async.map(entries,
 			  function(entry,callback) {
-			      request(remote+"query/"+entry,function(err,qRes,qBody){
+			      request(remote+"query/"+entry[0],function(err,qRes,qBody){
 				  var qbodyJson;
 				  try { 
 				      qbodyJson = JSON.parse(qBody)
@@ -147,6 +170,8 @@ function * withYield() {
 				 res.redirect("/");
 			     } else {
 				 console.log(results);
+				 session = req.session;
+				 session.login = true;
 				 res.render('blockchain',{cargo:[ {'name':'AIDS','age':'88'},
 								  {'name':'Syphil','age':'38'},
 								  {'name':'Hysteric','age':'18'},
@@ -159,14 +184,8 @@ function * withYield() {
 		// alert("Server is temporarily down. You can still get your data back. ");
 	    }
 	})
-	
 
     });
-
-
-
-
-
 }
 
 co(withYield);
