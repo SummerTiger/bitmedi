@@ -1,17 +1,15 @@
 {
-  "name": "jsonserver",
+  "name": "cli",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.14.2",
-    "express": "^4.13.3",
-    "qrcode": "^0.4.2",
-    "zerorpc": "^0.9.6"
+    "async": "^1.5.2",
+    "nodejs-aes256": "^1.0.1"
   }
 }
