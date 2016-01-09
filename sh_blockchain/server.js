@@ -23,11 +23,12 @@ var server = app.listen(3002, function () {
     console.log('Example app listening at http://%s:%s', host, port);
 });
 
-app.get('/', function (req, res) {
-    res.sendfile(__dirname + '/index.html');
-});
+/*
+ app.get('/', function (req, res) {
+ res.sendfile(__dirname + '/index.html');
+ });
 
-
+ */
 
 
 function getcomments() {
@@ -83,6 +84,9 @@ function * withYield() {
     var data = yield getcomments();
     console.log(data);
 
+    var bodyParser = require('body-parser');
+
+    app.use(bodyParser());
 
     app.get('/blockchain', function(req, res) {
 
@@ -92,12 +96,39 @@ function * withYield() {
 
     });
 
+    app.get('/', function(req, res){
+        // The form's action is '/' and its method is 'POST',
+        // so the `app.post('/', ...` route will receive the
+        // result of our form
+        var html = '<form action="/" method="post">' +
+            'Enter your name:' +
+            '<input type="text" name="userName" placeholder="..." />' +
+            '<br>' +
+            'Enter your password:' +
+            '<input type="text" name="passWord" placeholder="..." />' +
+            '<br>' +
+            '<button type="submit">Submit</button>' +
+            '</form>';
+
+        res.send(html);
+    });
+
+    app.post('/', function(req, res){
+        console.log(res);
+        var userName = req.body.userName;
+        var passWord = req.body.passWord;
+        var html = 'Hello: ' + userName + '.<br>' +
+            '       PassWord: ' + passWord + '.<br>' +
+            '<a href="/">Try again.</a>';
+        res.send(html);
+    });
+
+
 
 
 
 }
 
 co(withYield);
-
 
 
