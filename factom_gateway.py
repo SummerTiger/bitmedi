@@ -95,7 +95,7 @@ class BitMedi:
         print entry_hashed
         print s
         jdata = s.json()
-        print "Entry Data: "+jdata
+        print jdata
         # now convert HEX to string to print
         #print jdata[u'Content'].decode('hex')
         return jdata[u'Content'].decode('hex')

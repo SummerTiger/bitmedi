@@ -35,15 +35,16 @@ app.get('/showaddr',function(req,res){
 
 app.get('/query/:id/:hash',function(req,res) {
     client.invoke("query",req.params.id,req.params.hash,function(err,result,more){
-	res.jsonp(result);
+	res.jsonp({'result':result});
     });
 });
 
 app.post('/append',function(req,res) {
     var ID = req.body.id;
-    var Cipher = req.body.cipher;
+    var Cipher = req.body.encrypted;
+    console.log(Cipher);
     client.invoke("append",ID,Cipher,function(err,result,more){
-	res.jsonp({'result':result});
+	res.json({'result':result});
     })
 });
 

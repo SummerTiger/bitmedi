@@ -83,6 +83,21 @@ function co(gen) {
     next();
 }
 
+var CryptoJS = require("crypto-js");
+function encrypt(text,key){
+    return '' + CryptoJS.AES.encrypt(text,key);
+}
+
+function decrypt(cipher,key){
+    var bytes  = CryptoJS.AES.decrypt(cipher.toString(), key);
+    var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+    return plaintext;
+}
+
+function sha256(text) {
+    return CryptoJS.SHA256("Message").toString(CryptoJS.enc.Base64);
+}
+
 
 function * withYield() {
 
@@ -144,21 +159,30 @@ function * withYield() {
 	    if (!error && response.statusCode == 200) {
 		var bodyJson = JSON.parse(body);
 		var entries = bodyJson.entries;
-		console.log(entries);
+		console.log(entries.length);
 		async.map(entries,
 			  function(entry,callback) {
-			      request(remote+"query/"+entry[0],function(err,qRes,qBody){
+			      var url = remote+"query/"+ID+"/"+entry[0];
+			      request(url,function(err,qRes,qBody){
 				  var qbodyJson;
 				  try { 
-				      qbodyJson = JSON.parse(qBody)
-				      try {
-					  var plainText = JSON.parse(decrypt(qbodyJson.encryptedData,Key))
-					  callback(null,plainText);
-				      } catch(e) {
-					  callback("Bad data decrypted",null);
+				      qbodyJson = JSON.parse(qBody);
+				      console.log(qbodyJson);
+				      if (qbodyJson.result) {
+					  try {
+					      var decrypted = decrypt(qbodyJson.result,Key);
+					      var plainText = JSON.parse(decrypted);
+					      callback(null,plainText);
+					  } catch(e) {
+					      console.log(e);
+					      callback(url+" Bad data decrypted: "+ decrypt(qbodyJson.encryptedData,Key),null);
+					  }
+				      } else {
+					  callback(url+ " Entry not found: " + qBody,null);
 				      }
 				  } catch(e) {
-				      callback("Entry not found",null);
+				      console.log(e);
+				      callback(url+" Entry not found: "+ qBody,null);
 				  }
 			      });
 			  },
