@@ -14,7 +14,26 @@
     <link href="blockjs/css/style.css" rel="stylesheet">
 
     <script src="blockjs/js/jquery.min.js"></script>
+    <script src="CryptoJS/components/core-min.js"></script>
+    <script src="CryptoJS/rollups/aes.js"></script>
+    <script src="CryptoJS/components/enc-base64-min.js"></script>
+    <script src="CryptoJS/components/enc-utf16-min.js"></script>
+    <script src="CryptoJS/rollups/sha256.js"></script>
+    <script>
 
+      function encrypt(text,key){
+      return '' + CryptoJS.AES.encrypt(text,key);
+      }
+      
+      function decrypt(cipher,key){
+      var decrypted = CryptoJS.AES.decrypt(cipher,key);
+      return decrypted.toString(CryptoJS.enc.Utf8);
+      }
+      
+      function sha256(text) {
+      return CryptoJS.SHA256("Message").toString(CryptoJS.enc.Base64) 
+      }
+    </script>
 
 
 </head>
