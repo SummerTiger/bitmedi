@@ -1,2 +1,5 @@
 jsonserver/node_modules
+cli/node_modules
 *.*~
+*.pyc
+*.swp
