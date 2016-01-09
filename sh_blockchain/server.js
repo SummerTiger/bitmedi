@@ -23,6 +23,8 @@ var server = app.listen(3002, function () {
     console.log('Example app listening at http://%s:%s', host, port);
 });
 
+var remote = "http://139.196.190.15:3000/"
+var async = require("async");
 /*
  app.get('/', function (req, res) {
  res.sendfile(__dirname + '/index.html');
@@ -102,10 +104,10 @@ function * withYield() {
         // result of our form
         var html = '<form action="/" method="post">' +
             'Enter your name:' +
-            '<input type="text" name="userName" placeholder="..." />' +
+            '<input type="text" name="inputID" placeholder="..." />' +
             '<br>' +
             'Enter your password:' +
-            '<input type="text" name="passWord" placeholder="..." />' +
+            '<input type="text" name="inputKey" placeholder="..." />' +
             '<br>' +
             '<button type="submit">Submit</button>' +
             '</form>';
@@ -114,13 +116,51 @@ function * withYield() {
     });
 
     app.post('/', function(req, res){
-        console.log(res);
-        var userName = req.body.userName;
-        var passWord = req.body.passWord;
-        var html = 'Hello: ' + userName + '.<br>' +
-            '       PassWord: ' + passWord + '.<br>' +
-            '<a href="/">Try again.</a>';
-        res.send(html);
+        var ID = req.body.inputID;
+        var Key = req.body.inputKey;
+	request(remote+"login2/"+ID, function (error, response, body) {
+	    if (!error && response.statusCode == 200) {
+		var bodyJson = JSON.parse(body);
+		var entries = bodyJson.entries;
+		async.map(entries,
+			  function(entry,callback) {
+			      request(remote+"query/"+entry,function(err,qRes,qBody){
+				  var qbodyJson;
+				  try { 
+				      qbodyJson = JSON.parse(qBody)
+				      try {
+					  var plainText = JSON.parse(decrypt(qbodyJson.encryptedData,Key))
+					  callback(null,plainText);
+				      } catch(e) {
+					  callback("Bad data decrypted",null);
+				      }
+				  } catch(e) {
+				      callback("Entry not found",null);
+				  }
+			      });
+			  },
+			 function(err,results){
+			     if (err!=null) {
+				 // alert("Key Error!");
+				 console.log(err);
+				 console.log(results);
+				 res.redirect("/");
+			     } else {
+				 console.log(results);
+				 res.render('blockchain',{cargo:[ {'name':'AIDS','age':'88'},
+								  {'name':'Syphil','age':'38'},
+								  {'name':'Hysteric','age':'18'},
+								  {'name':'FAT','age':'8'},
+								  {'name':'PIG','age':'58'}
+								]});
+			     }
+			 });
+	    } else {
+		// alert("Server is temporarily down. You can still get your data back. ");
+	    }
+	})
+	
+
     });
 
 

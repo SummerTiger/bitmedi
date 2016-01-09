@@ -1,6 +1,7 @@
-jsonserver/node_modules
-cli/node_modules
+node_modules
 *.*~
 *.pyc
 *.swp
 *.db
+*.log
+

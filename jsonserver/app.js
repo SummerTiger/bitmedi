@@ -42,8 +42,10 @@ app.get('/showaddr',function(req,res){
     });
 })
 
-app.get('/query/:hash',function(req,res) {
-    res.send({'encryptedData':'an2Zva28wv/3xmBNokaus6pFwBRZ/BlCGrFkkx/Ck7YedtAWHWAkBQ=='});
+app.get('/query/:id/:hash',function(req,res) {
+    client.invoke("query",req.params.id,req.params.hash,function(err,result,more){
+	res.jsonp(result);
+    });
 });
 
 app.post('/append',function(req,res) {
