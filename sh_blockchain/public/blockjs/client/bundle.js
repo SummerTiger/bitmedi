@@ -20498,19 +20498,15 @@ function * withYield() {
         .attr("height", 20)
         .style("fill", "gray");
 
+    /*
     svg11.append("image")
         .attr("xlink:href", "blockjs/2.jpg")
         .attr("x", "10")
         .attr("y", "20")
         .attr("width", "200")
         .attr("height", "200");
+    */
 
-    svg11.append("image")
-        .attr("xlink:href", "blockjs/2.jpg")
-        .attr("x", "10")
-        .attr("y", "20")
-        .attr("width", "200")
-        .attr("height", "200");
 
     svg11.append("text")
         .attr("x", 80)
