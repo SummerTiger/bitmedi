@@ -124,6 +124,10 @@ function * withYield() {
 
 co(withYield);
 
+$('#myModal').modal('show');
+
+
+
 
 
 
