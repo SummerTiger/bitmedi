@@ -1,5 +1,6 @@
 var express = require('express');
 var qr = require('./qr.js');
+var utils = require('./utils.js');
 var bodyParser = require("body-parser");
 var app = express();
 
@@ -34,10 +35,12 @@ app.get('/detail/:id',function(req,res){
 
 app.get('/getQR', function(req,res) {
     data = req.query.data;
-    console.log(data);
     if (data!=null) {
 	qr.genQRCode(data,function(base64){
-	    res.send(base64);
+	    var imageData = utils.decodeBase64Image(base64);
+console.log(imageData);
+	    res.writeHead(200, {'Content-Type': 'image/png' });
+	    res.end(imageData.data, 'binary');
 	});
     } else {
 	res.send("");
