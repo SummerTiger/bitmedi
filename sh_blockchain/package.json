@@ -1,0 +1,19 @@
+{
+  "name": "sh_blockchain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^4.0.0-alpha.4",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "lodash": "^3.10.1",
+    "request": "^2.67.0"
+  }
+}

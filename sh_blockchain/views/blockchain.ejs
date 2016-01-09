@@ -10,11 +10,35 @@
     <meta name="description" content="Source code generated using layoutit.com">
     <meta name="author" content="LayoutIt!">
 
-    <link href="blockjs/css/bootstrap.min.css" rel="stylesheet">
-    <link href="blockjs/css/style.css" rel="stylesheet">
 
+
+    <!-- BS  -->
     <script src="blockjs/js/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.js"></script>
 
+
+    <script src="CryptoJS/components/core-min.js"></script>
+    <script src="CryptoJS/rollups/aes.js"></script>
+    <script src="CryptoJS/components/enc-base64-min.js"></script>
+    <script src="CryptoJS/components/enc-utf16-min.js"></script>
+    <script src="CryptoJS/rollups/sha256.js"></script>
+    <script>
+
+      function encrypt(text,key){
+      return '' + CryptoJS.AES.encrypt(text,key);
+      }
+      
+      function decrypt(cipher,key){
+      var decrypted = CryptoJS.AES.decrypt(cipher,key);
+      return decrypted.toString(CryptoJS.enc.Utf8);
+      }
+      
+      function sha256(text) {
+      return CryptoJS.SHA256("Message").toString(CryptoJS.enc.Base64) 
+      }
+    </script>
 
 
 </head>
@@ -28,26 +52,73 @@
 
 </script>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+
+<div class="container-fluid">
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+
         </div>
+    </div>
 
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>
+                Heading
+            </h2>
+            <p>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+            </p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>
+                Heading
+            </h2>
+            <p>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+            </p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>
+                Heading
+            </h2>
+            <p>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+            </p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+
+
+
+        </div>
     </div>
 </div>
+
 
 
 
