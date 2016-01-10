@@ -17,7 +17,15 @@ app.use(session({secret: 'ssshhhhh'}));
 var request = require('request');
 var path = require('path');
 var session;
+var sample = require('./public/sample.json');
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function randomSample() {
+    return sample[getRandomInt(0,99)];
+}
 
 var server = app.listen(3002, function () {
     var host = server.address().address;
@@ -196,11 +204,14 @@ function * withYield() {
 				 console.log(results);
 				 session = req.session;
 				 session.login = true;
-				 res.render('blockchain',{cargo:[ {'name':'AIDS','age':'88'},
-								  {'name':'Syphil','age':'38'},
-								  {'name':'Hysteric','age':'18'},
-								  {'name':'FAT','age':'8'},
-								  {'name':'PIG','age':'58'}
+				 res.render('blockchain',{cargo:[ randomSample(),
+								  randomSample(),
+								  randomSample(),
+								  randomSample(),
+								  randomSample(),
+								  randomSample(),
+								  randomSample(),
+								  randomSample()
 								]});
 			     }
 			 });

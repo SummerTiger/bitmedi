@@ -165,3 +165,4 @@ Cannot use non Entry Credit Address for Entry Commit
 2016/01/10 06:08:41 127.0.0.1 - [32;1m POST /v1/compose-chain-submit/jackec[0m - 1.010404ms
 2016/01/10 06:15:34 127.0.0.1 - [32;1m POST /v1/compose-chain-submit/jackec[0m - 1.207462ms
 2016/01/10 06:46:27 127.0.0.1 - [32;1m POST /v1/compose-entry-submit/jackec[0m - 1.154919ms
+2016/01/10 08:38:12 127.0.0.1 - [32;1m POST /v1/compose-entry-submit/jackec[0m - 1.128098ms
