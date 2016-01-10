@@ -74,19 +74,19 @@ function * withYield() {
 
 
     svg11.append("image")
-        .attr("xlink:href", "blockjs/2.jpg")
+        .attr("xlink:href", "blockjs/man369.png")
         .attr("x", "10")
         .attr("y", "20")
         .attr("width", "200")
         .attr("height", "200");
 
-        var mul = 300;
+    var mul = 300;
 
 
     svg11.append("text")
-        .attr("x", 50)
+        .attr("x", 75)
         .attr("y", 250)
-        .text( "SummerTiger")
+        .text( "Patient")
         .attr("font-family", "sans-serif")
         .attr("font-size", "20px")
         .attr("fill", "blue");
@@ -108,7 +108,7 @@ function * withYield() {
             console.log(i);
             console.log(d);
             return 100+i*mul; })
-        .text( function (d) { return "Record :"+d.name; })
+        .text( function (d) { return "_id : "+d._id; })
         .attr("font-family", "sans-serif")
         .attr("font-size", "20px")
         .attr("fill", "blue");
@@ -121,11 +121,69 @@ function * withYield() {
         .attr("y", function(d,i) {
             console.log(i);
             console.log(d);
-            return 100+i*mul+20; })
-        .text( function (d) { return d.age; })
+            return 100+i*mul+30; })
+        .text( function (d) { return "Age : "+d.age; })
         .attr("font-family", "sans-serif")
         .attr("font-size", "20px")
-        .attr("fill", "red");
+        .attr("fill", "black");
+
+
+    svg11.selectAll("text_gender")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", function(d) { return 250; })
+        .attr("y", function(d,i) {
+            console.log(i);
+            console.log(d);
+            return 100+i*mul+60; })
+        .text( function (d) { return "gender : "+d.gender; })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "20px")
+        .attr("fill", "black");
+
+    svg11.selectAll("text_job")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", function(d) { return 250; })
+        .attr("y", function(d,i) {
+            console.log(i);
+            console.log(d);
+            return 100+i*mul+90; })
+        .text( function (d) { return "job : "+d.job; })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "20px")
+        .attr("fill", "black");
+
+    svg11.selectAll("text_sympton")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", function(d) { return 250; })
+        .attr("y", function(d,i) {
+            console.log(i);
+            console.log(d);
+            return 100+i*mul+120; })
+        .text( function (d) { return "sympton : "+d.sympton; })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "20px")
+        .attr("fill", "black");
+
+    svg11.selectAll("text_weight")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", function(d) { return 250; })
+        .attr("y", function(d,i) {
+            console.log(i);
+            console.log(d);
+            return 100+i*mul+150; })
+        .text( function (d) { return "weight : "+d.weight; })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "20px")
+        .attr("fill", "black");
+
 
 
     svg11.selectAll("image2")
@@ -137,7 +195,7 @@ function * withYield() {
         .attr("y", function(d,i) {
             console.log(i);
             console.log(d);
-            return 100+i*mul-70; })
+            return 100+i*mul-40; })
         .attr("width", "300")
         .attr("height", "300");
 
@@ -154,6 +212,39 @@ function * withYield() {
         .attr("font-family", "sans-serif")
         .attr("font-size", "12px")
         .attr("fill", "black");
+
+    svg11.selectAll("circle1")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d) {
+            if (d.sympton =='1')
+            {return 610; }
+            if (d.sympton =='2')
+            {return 730; }
+            if (d.sympton =='3')
+            {return 730; }
+            if (d.sympton =='4')
+            {return 730; }
+            if (d.sympton =='5')
+            {return 730; }
+
+        })
+        .attr("cy", function(d,i) {
+            if (d.sympton =='1')
+            {return 100+i*mul+50+90; }
+            if (d.sympton =='2')
+            {return 100+i*mul+100; }
+            if (d.sympton =='3')
+            {return 100+i*mul+50+116; }
+            if (d.sympton =='4')
+            {return 100+i*mul+50; }
+            if (d.sympton =='5')
+            {return 100+i*mul+50; }
+
+        })
+        .attr("r", function (d) { return 10; })
+        .style("fill", function(d) { return "red"; });
 
 
 
