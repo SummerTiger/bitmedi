@@ -12,7 +12,7 @@ var _ = require('lodash');
 
 
 
-console.log(data.name);
+console.log(data);
 
 //var svg3 = d3.select("#p3");
 var svg2 = d3.select("#p2");
@@ -56,8 +56,8 @@ function co(gen) {
 function * withYield() {
 
     var list = yield getlistdata();
-    console.log("list");
-    console.log(list);
+    //console.log("list");
+    //console.log(list);
 
     var svg1 = d3.select("#p1");
 
@@ -72,20 +72,21 @@ function * withYield() {
         .attr("height", 20)
         .style("fill", "gray");
 
-    /*
+
     svg11.append("image")
         .attr("xlink:href", "blockjs/2.jpg")
         .attr("x", "10")
         .attr("y", "20")
         .attr("width", "200")
         .attr("height", "200");
-    */
+
+        var mul = 300;
 
 
     svg11.append("text")
-        .attr("x", 80)
+        .attr("x", 50)
         .attr("y", 250)
-        .text( "初夏虎")
+        .text( "SummerTiger")
         .attr("font-family", "sans-serif")
         .attr("font-size", "20px")
         .attr("fill", "blue");
@@ -93,24 +94,66 @@ function * withYield() {
     svg11.append("text")
         .attr("x", 250)
         .attr("y", 50)
-        .text( "當前既有病歷")
+        .text( "Medical electronics record")
         .attr("font-family", "sans-serif")
         .attr("font-size", "20px")
         .attr("fill", "black");
 
     svg11.selectAll("text2")
-        .data(entries)
+        .data(data)
         .enter()
         .append("text")
         .attr("x", function(d) { return 250; })
         .attr("y", function(d,i) {
             console.log(i);
             console.log(d);
-            return 100+i*30; })
-        .text( function (d) { return d; })
+            return 100+i*mul; })
+        .text( function (d) { return "Record :"+d.name; })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "20px")
+        .attr("fill", "blue");
+
+    svg11.selectAll("text_age")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", function(d) { return 250; })
+        .attr("y", function(d,i) {
+            console.log(i);
+            console.log(d);
+            return 100+i*mul+20; })
+        .text( function (d) { return d.age; })
         .attr("font-family", "sans-serif")
         .attr("font-size", "20px")
         .attr("fill", "red");
+
+
+    svg11.selectAll("image2")
+        .data(data)
+        .enter()
+        .append("image")
+        .attr("xlink:href", "blockjs/Body_cavities.jpg")
+        .attr("x", function(d) { return 550; })
+        .attr("y", function(d,i) {
+            console.log(i);
+            console.log(d);
+            return 100+i*mul-70; })
+        .attr("width", "300")
+        .attr("height", "300");
+
+    svg11.selectAll("text_source")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", function(d) { return 630; })
+        .attr("y", function(d,i) {
+            console.log(i);
+            console.log(d);
+            return 100+i*mul+190; })
+        .text( function (d) { return "Author:Connexions"; })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .attr("fill", "black");
 
 
 
@@ -121,7 +164,6 @@ function * withYield() {
 co(withYield);
 
 $('#myModal').modal('show');
-
 
 
 
