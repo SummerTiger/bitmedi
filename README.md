@@ -32,4 +32,4 @@ to generate your public address to service
 *factom-cli balances*
 
 ## License
-Peatio is released under the terms of the MIT license. See http://peatio.mit-license.org for more information.
+BitMedi is released under the terms of the MIT license. See http://peatio.mit-license.org for more information.
