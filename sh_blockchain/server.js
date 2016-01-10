@@ -132,17 +132,20 @@ function * withYield() {
         // The form's action is '/' and its method is 'POST',
         // so the `app.post('/', ...` route will receive the
         // result of our form
-        var html = '<form action="/" method="post">' +
-            'Enter your name:' +
-            '<input type="text" name="inputID" placeholder="..." />' +
-            '<br>' +
-            'Enter your password:' +
-            '<input type="text" name="inputKey" placeholder="..." />' +
-            '<br>' +
-            '<button type="submit" onclick="alert(\"hello\");">Submit</button>' +
-            '</form>';
+        // var html = 
+	    
+	//     '<form action="/" method="post">' +
+        //     'Enter your name:' +
+        //     '<input type="text" name="inputID" placeholder="..." />' +
+        //     '<br>' +
+        //     'Enter your password:' +
+        //     '<input type="text" name="inputKey" placeholder="..." />' +
+        //     '<br>' +
+        //     '<button type="submit" onclick="alert(\"hello\");">Submit</button>' +
+        //     '</form>';
 
-        res.send(html);
+        // res.send(html);
+	res.render('login');
     });
 
     var ID;
@@ -165,6 +168,7 @@ function * withYield() {
         Key = req.body.inputKey;
 	request(remote+"login/"+ID, function (error, response, body) {
 	    if (!error && response.statusCode == 200) {
+		console.log(body);
 		var bodyJson = JSON.parse(body);
 		var entries = bodyJson.entries;
 		console.log(entries.length);
@@ -204,15 +208,7 @@ function * withYield() {
 				 console.log(results);
 				 session = req.session;
 				 session.login = true;
-				 res.render('blockchain',{cargo:[ randomSample(),
-								  randomSample(),
-								  randomSample(),
-								  randomSample(),
-								  randomSample(),
-								  randomSample(),
-								  randomSample(),
-								  randomSample()
-								]});
+				 res.render('blockchain',{cargo:results});
 			     }
 			 });
 	    } else {
