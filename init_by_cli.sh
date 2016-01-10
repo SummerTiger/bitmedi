@@ -1,13 +1,12 @@
 #!/bin/sh
 
 if [ $# != 2 ];then
-	echo "Usage: $0 FctAddress EC_Address"
+	echo "Usage: $0 Fctkey EC_key"
 	exit 0
 fi
 
-factom-cli newaddress fct sand $1
-# if you want to add newaddress for ec, please cmd "factom-cli ..."
-factom-cli newaddress ec zeros $2
+factom-cli newaddress fct fct_addr_1 $1
+factom-cli newaddress ec ec_addr_1 $2
 
 #factom-cli newaddress ec zeros Es2Rf7iM6PdsqfYCo3D1tnAR65SkLENyWJG1deUzpRMQmbh9F3eG
 #factom-cli newtransaction trans1

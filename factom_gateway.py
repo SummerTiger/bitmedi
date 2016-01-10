@@ -26,6 +26,7 @@ class BitMedi:
 
     def fct_post(self, method, action, target, values):
         """
+	private base api
         this function for posting data from bitmedi svr from factom svr.
         url - factom svr url
         action - factom action, compose-chain-submit etc.
@@ -44,6 +45,7 @@ class BitMedi:
 
     def fct_inquiry(self, method, action, target):
         """
+	private base api
         this function for inquiry data from bitmedi svr from factom svr.
         url - factom svr url
         action - factom action, compose-chain-submit etc.
@@ -60,6 +62,9 @@ class BitMedi:
         pass
 
     def init_chain(self, seq, entry_name):
+	"""
+	generate a new chain with humman-read seq for token chain
+	"""
         values = {"ExtIDs":["bitmedi", seq], 
                     "Content":"NO."+seq+" chain of bitmedi"}
         s = self.fct_post("fctwallet", "compose-chain-submit", entry_name, values)
@@ -68,6 +73,9 @@ class BitMedi:
         self.fct_post("factomd", "reveal-chain", "", s[u'EntryReveal'])
 
     def post_record_to_fct(self, seq, entry_name, user_id, enc_content):
+	"""
+	post record to factom with user_id, enc_content
+	"""
         values = {"ChainID":self.bitmedi_chain_dic[seq], 
                     "ExtIDs":[user_id], 
                     "Content":enc_content}
@@ -89,18 +97,22 @@ class BitMedi:
 	return entry_hashed
 
     def get_record_from_fct(self, user_id, entry_hashed):
-        
+	"""
+	get record from factom with entry_hashed
+	return content
+	"""
         s = self.fct_inquiry("factomd", "entry-by-hash", entry_hashed)
-        print user_id
-        print entry_hashed
-        print s
         jdata = s.json()
-        print jdata
+        #print jdata
         # now convert HEX to string to print
         #print jdata[u'Content'].decode('hex')
         return jdata[u'Content'].decode('hex')
 
     def login(self, user_id):
+	"""
+	a user login in with his/her/its user_id
+	return his/her/its entry_hashed list
+	"""
 	cur = self.db_con.execute("select entryhashed from cached where userid='"+user_id+"';")
     	cur_list = []
     	for row in cur:
