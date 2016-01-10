@@ -63,6 +63,7 @@
            var ID = data.ID;
            var Key = data.Key;
            var encrypted = encrypt(JSON.stringify({'name':'John Smith','age':38,'gender':'male'}),Key);
+           console.log(encrypted);
            $.post("http://139.196.190.15:3002/append",{id:ID,encrypted:encrypted},function(result){
                console.log(result);
            });
