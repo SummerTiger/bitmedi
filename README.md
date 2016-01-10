@@ -30,3 +30,6 @@ you can give other database to instead of sqlite3
 to generate your public address to service
 1. see factom-cli commond with help: *factom-cli* -help, then execute:
 *factom-cli balances*
+
+## License
+Peatio is released under the terms of the MIT license. See http://peatio.mit-license.org for more information.
