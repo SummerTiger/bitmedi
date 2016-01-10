@@ -20492,7 +20492,7 @@ function * withYield() {
         .attr("transform", "translate(0,0)");
 
     svg11.append("rect")
-        .attr("x", 250)
+        .attr("x", 240)
         .attr("y", 0)
         .attr("width", 900)
         .attr("height", 20)
@@ -20506,8 +20506,20 @@ function * withYield() {
         .attr("width", "200")
         .attr("height", "200");
 
+
+
+
+
     var mul = 300;
 
+
+    svg11.append("text")
+        .attr("x", 75)
+        .attr("y", 270)
+        .text( "Icon made by Freepik")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "10px")
+        .attr("fill", "blue");
 
     svg11.append("text")
         .attr("x", 75)
@@ -20538,6 +20550,22 @@ function * withYield() {
         .attr("font-family", "sans-serif")
         .attr("font-size", "20px")
         .attr("fill", "blue");
+
+    svg11.selectAll("rect_e")
+        .data(data)
+        .enter()
+        .append("rect")
+
+        .attr("x", function(d) { return 250-10; })
+        .attr("y", function(d,i) {
+            console.log(i);
+            console.log(d);
+            return 80+i*mul; })
+        .style("fill", "none")
+.attr("width", 650)
+        .attr("stroke", "black")
+        .attr("height", 250);
+
 
     svg11.selectAll("text_age")
         .data(data)
